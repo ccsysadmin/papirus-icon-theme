@@ -49,7 +49,7 @@ COLORS=(
 	# |-------|-------|-------|-------|-------|
 	[blue]="   #5294e2 #4877b1 #1d344f #dcdcdc"
 	[black]="  #4f4f4f #505050 #1c1c1c #dcdcdc"
-	[brown]="  #856b35 #605233 #2e2512 #dcdcdc"
+	[brown]="  #ae8e6c #957552 #3d3226 #dcdcdc"
 	[cyan]="   #3cbdb8 #289ea1 #154240 #dcdcdc"
 	[green]="  #83d85e #69ad4c #2e4b21 #dcdcdc"
 	[gray]="   #9a9a9a #7d7d7d #363636 #dcdcdc"
