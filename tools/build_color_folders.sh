@@ -35,7 +35,7 @@ TARGET_DIR="$SCRIPT_DIR/../Papirus"
 
 DEFAULT_COLOR="blue"
 SIZES_REGEX="(16x16|22x22|24x24|32x32|48x48|64x64)"
-FILES_REGEX="(folder|user)-${DEFAULT_COLOR}.*"
+FILES_REGEX="(folder|user)-"
 
 declare -A COLORS
 
@@ -74,7 +74,7 @@ recolor() {
 }
 
 find "$TARGET_DIR" -regextype posix-extended \
-	-regex ".*/${SIZES_REGEX}/places/${FILES_REGEX}" \
+	-regex ".*/${SIZES_REGEX}/places/${FILES_REGEX}${DEFAULT_COLOR}.*" \
 	-print0 | while read -d $'\0' file; do
 
 	for color in "${!COLORS[@]}"; do
@@ -102,5 +102,34 @@ find "$TARGET_DIR" -regextype posix-extended \
 
 	for d in "${DERIVATIVES[@]}"; do
 		cp -Pv --remove-destination "$file" "${file/Papirus/$d}"
+	done
+done
+
+
+# Create symlinks for Folder Color 0.0.80 and newer
+FOLDER_COLOR_MAP=(
+	# Icons mapping:
+	# Folder Color icon          Papirus icon
+	"folder-COLOR-desktop.svg    user-COLOR-desktop.svg"
+	"folder-COLOR-downloads.svg  folder-COLOR-download.svg"
+	"folder-COLOR-public.svg     folder-COLOR-image-people.svg"
+	"folder-COLOR-videos.svg     folder-COLOR-video.svg"
+)
+
+for mask in "${FOLDER_COLOR_MAP[@]}"; do
+	for color in "${!COLORS[@]}"; do
+		icon_mask=( $mask )
+		folder_color_icon="${icon_mask[0]/COLOR/$color}"
+		icon="${icon_mask[1]/COLOR/$color}"
+
+		find "$TARGET_DIR" -regextype posix-extended \
+			-regex ".*/${SIZES_REGEX}/places/${icon}" \
+			-print0 | while read -d $'\0' file; do
+
+			base_name="$(basename "$file")"
+			dir_name="$(dirname "$file")"
+
+			ln -sfv "$base_name" "$dir_name/$folder_color_icon"
+		done
 	done
 done
