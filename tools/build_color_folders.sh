@@ -57,6 +57,7 @@ COLORS=(
 	[orange]=" #f49940 #dc8948 #553516 #dcdcdc"
 	[red]="    #e25252 #bf4b4b #4f1d1d #dcdcdc"
 	[yellow]=" #f5ce46 #e5b732 #564818 #dcdcdc"
+	[custom]=" #value_light #value_dark #2a2a2a #dcdcdc"
 )
 
 recolor() {
